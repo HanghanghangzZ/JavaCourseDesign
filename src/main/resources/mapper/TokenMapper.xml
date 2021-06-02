@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hang.toilethrmanagement.mapper.TokenMapper">
+
+    <insert id="generateToken">
+        INSERT INTO token
+        VALUES (null, #{userId}, #{expireTime}, #{token})
+    </insert>
+
+    <delete id="deleteToken">
+        DELETE
+        FROM token
+        WHERE user_id = #{userid}
+    </delete>
+
+    <select id="tokenExistAndNotExpire" resultType="_int">
+        SELECT COUNT(*)
+        FROM token
+        WHERE token = #{token}
+          AND user_id = #{userId}
+          AND expire_time > #{currentTimeMillis}
+    </select>
+
+    <select id="containUserId" resultType="_int">
+        SELECT COUNT(*)
+        FROM token
+        WHERE user_id = #{id}
+    </select>
+
+    <update id="updateToken" parameterType="token">
+        UPDATE token
+        SET expire_time = #{expireTime},
+            token       = #{token}
+        WHERE user_id = #{userId}
+    </update>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hang.toilethrmanagement.mapper.PerformanceMapper">
+
+    <select id="getPerformanceList" resultType="performance">
+        SELECT *
+        FROM performance
+        <where>
+            <if test="query != '' and query != null">
+                staff_id IN
+                (SELECT id FROM staff
+                WHERE name REGEXP #{query})
+            </if>
+        </where>
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <insert id="addPerformance" parameterType="performance">
+        INSERT INTO performance
+        VALUES (null, #{staffId}, #{date}, #{bonus})
+    </insert>
+
+    <select id="countPerformance" resultType="_int">
+        SELECT COUNT(*)
+        FROM performance
+        <where>
+            <if test="query != '' and query != null">
+                staff_id IN
+                (SELECT id FROM staff
+                WHERE name REGEXP #{query})
+            </if>
+        </where>
+    </select>
+
+    <select id="getPerformanceListByYM" resultType="performance">
+        SELECT staff_id, bonus
+        FROM performance
+        WHERE DATE_FORMAT(FROM_UNIXTIME(performance.date / 1000), '%Y-%m') = #{ym};
+    </select>
+</mapper>

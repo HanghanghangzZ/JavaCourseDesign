@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hang.toilethrmanagement.mapper.StaffMapper">
+
+    <select id="getStaffList" resultType="staff">
+        SELECT *
+        FROM staff
+        <where>
+            <if test="query != '' and query != null">
+                name REGEXP #{query}
+            </if>
+        </where>
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <update id="updateStaffById" parameterType="staff">
+        UPDATE staff
+        <set>
+            <if test="name != '' and name != null">
+                `name` = #{name},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard},
+            </if>
+            <if test="position_id != null">
+                position_id = #{positionId},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="sex != '' and sex != null">
+                sex = #{sex},
+            </if>
+            <if test="qualificationId != null">
+                qualification_id = #{qualificationId},
+            </if>
+            <if test="education != '' and education != null">
+                education = #{education},
+            </if>
+            <if test="entryTime != null">
+                entry_time = #{entryTime},
+            </if>
+            <if test="contractExpirationTime != null">
+                contract_expiration_time = #{contractExpirationTime},
+            </if>
+            <if test="isResigned != null">
+                is_resigned = #{isResigned}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="countStaff" resultType="_int">
+        SELECT COUNT(*)
+        FROM staff
+        <where>
+            <if test="query != '' and query != null">
+                name REGEXP #{query}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertStaff" parameterType="staff">
+        INSERT INTO staff
+        VALUES (null, #{name}, #{idCard}, #{positionId}, #{age}, #{sex}, #{qualificationId}, #{education}, #{entryTime},
+                #{contractExpirationTime}, 0)
+    </insert>
+
+    <select id="getStaffNameById" resultType="string">
+        SELECT name
+        FROM staff
+        WHERE id = #{staffId}
+    </select>
+</mapper>

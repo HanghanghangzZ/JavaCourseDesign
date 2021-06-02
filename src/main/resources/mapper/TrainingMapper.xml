@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hang.toilethrmanagement.mapper.TrainingMapper">
+
+    <select id="getTrainingList" resultType="training">
+        SELECT *
+        FROM training
+        <where>
+            <if test="query != '' and query != null">
+                staff_id IN
+                (SELECT id FROM staff
+                WHERE name REGEXP #{query})
+            </if>
+        </where>
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <insert id="addTraining" parameterType="training">
+        INSERT INTO training
+        VALUES (null, #{trainingMethod}, #{score}, #{staffId}, #{startTime}, #{endTime}, #{lastTime})
+    </insert>
+
+    <delete id="deleteTrainingById">
+        DELETE
+        FROM training
+        WHERE id = #{id}
+    </delete>
+
+    <select id="countTraining" resultType="_int">
+        SELECT COUNT(*)
+        FROM training
+        <where>
+            <if test="query != '' and query != null">
+                staff_id IN
+                (SELECT id FROM staff
+                WHERE name REGEXP #{query})
+            </if>
+        </where>
+    </select>
+
+</mapper>

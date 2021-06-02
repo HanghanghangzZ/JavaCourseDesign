@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hang.toilethrmanagement.mapper.PositionMapper">
+
+    <select id="getPositionList" resultType="position">
+        SELECT *
+        FROM position
+        <where>
+            <if test="query != '' and query != null">
+                name REGEXP #{query}
+            </if>
+        </where>
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <update id="updatePositionById" parameterType="position">
+        UPDATE position
+        <set>
+            <if test="name != '' and name != null">
+                name = #{name},
+            </if>
+            <if test="basicWage != null">
+                basic_wage = #{basicWage}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <insert id="addPosition" parameterType="position">
+        INSERT INTO position
+        VALUES (null, #{name}, #{basicWage}, 0)
+    </insert>
+
+    <delete id="deletePositionById">
+        DELETE
+        FROM position
+        WHERE id = #{id}
+    </delete>
+
+    <select id="countPosition" resultType="_int">
+        SELECT COUNT(*)
+        FROM position
+        <where>
+            <if test="query != '' and query != null">
+                name REGEXP #{query}
+            </if>
+        </where>
+    </select>
+
+    <select id="getPositionById" resultType="position">
+        SELECT *
+        FROM position
+        WHERE id = #{positionId}
+    </select>
+
+    <update id="addCountById">
+        UPDATE position
+        SET count = count + 1
+        WHERE id = #{positionId}
+    </update>
+</mapper>

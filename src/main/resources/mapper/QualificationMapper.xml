@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hang.toilethrmanagement.mapper.QualificationMapper">
+
+    <select id="getQualificationList" resultType="qualification">
+        SELECT *
+        FROM qualification
+        <where>
+            <if test="query != '' and query != null">
+                name REGEXP #{query}
+            </if>
+        </where>
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <update id="updateQualificationById" parameterType="qualification">
+        UPDATE qualification
+        <set>
+            <if test="name != '' and name != null">
+                name = #{name},
+            </if>
+            <if test="extraSalary != null">
+                extra_salary = #{extraSalary}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <insert id="addQualification" parameterType="qualification">
+        INSERT INTO qualification
+        VALUES (null, #{name}, #{extraSalary}, 0)
+    </insert>
+
+    <delete id="deleteQualificationById">
+        DELETE
+        FROM qualification
+        WHERE id = #{id}
+    </delete>
+
+    <select id="countQualification" resultType="_int">
+        SELECT COUNT(*)
+        FROM qualification
+        <where>
+            <if test="query != '' and query != null">
+                name REGEXP #{query}
+            </if>
+        </where>
+    </select>
+
+    <select id="getQualificationById" resultType="qualification">
+        SELECT * FROM qualification
+        WHERE id = #{qualificationId}
+    </select>
+
+    <update id="addCountById">
+        UPDATE qualification
+        SET count = count + 1
+        WHERE id = #{qualificationId}
+    </update>
+</mapper>

@@ -1,0 +1,12 @@
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.hang.toilethrmanagement.model
+  mapper-locations: classpath:mapper/*.xml
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/toilet_hr_management?serverTimeZone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: "zhuRUIhang123"
+    driver-class-name: com.mysql.cj.jdbc.Driver

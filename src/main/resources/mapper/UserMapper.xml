@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hang.toilethrmanagement.mapper.UserMapper">
+
+    <select id="getUserList" resultType="user">
+        SELECT *
+        FROM user
+        <where>
+            <if test="query != '' and query != null">
+                staff_id IN
+                (SELECT id FROM staff
+                WHERE name REGEXP #{query})
+            </if>
+        </where>
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <update id="updateUserById" parameterType="user">
+        UPDATE user
+        <set>
+            <if test="username != '' and username != null">
+                username = #{username},
+            </if>
+            <if test="password != '' and password != null">
+                `password`= #{password},
+            </if>
+            <if test="staffId != null">
+                staff_id = #{staffId}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <insert id="addUser" parameterType="user">
+        INSERT INTO user
+        VALUES (null, #{username}, #{password}, #{staffId})
+    </insert>
+
+    <delete id="deleteUserById">
+        DELETE
+        FROM user
+        WHERE id = #{id}
+    </delete>
+
+    <select id="countUser" resultType="_int">
+        SELECT COUNT(*)
+        FROM user
+        <where>
+            <if test="query != '' and query != null">
+                staff_id IN
+                (SELECT id FROM staff
+                WHERE name REGEXP #{query})
+            </if>
+        </where>
+    </select>
+
+    <select id="login" parameterType="user" resultType="int">
+        SELECT id
+        FROM user
+        WHERE username = #{username}
+          AND password = #{password}
+    </select>
+
+    <select id="duplicateName" resultType="_int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE username = #{username}
+    </select>
+</mapper>
