@@ -1,11 +1,13 @@
 package com.hang.toilethrmanagement.controller;
 
+import com.hang.toilethrmanagement.bean.Pagination;
 import com.hang.toilethrmanagement.dto.TrainingDTO;
 import com.hang.toilethrmanagement.enums.CRUDMsgEnum;
 import com.hang.toilethrmanagement.mapper.TrainingMapper;
 import com.hang.toilethrmanagement.model.Qualification;
 import com.hang.toilethrmanagement.model.Training;
 import com.hang.toilethrmanagement.service.TrainingService;
+import com.hang.toilethrmanagement.utils.PaginationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +35,14 @@ public class TrainingController {
                                              @PathVariable Integer pageNum, @PathVariable Integer pageSize) {
         HashMap<String, Object> result = new HashMap<>();
 
-        List<TrainingDTO> trainingDTOList = trainingService.getTrainingDTOList(query, pageNum, pageSize);
-
         int totalCount = trainingService.countTraining(query);
 
+        Pagination pagination = PaginationUtil.getPagination(totalCount, pageSize, pageNum);
+        pageNum = pagination.getPageNum();
+
+        List<TrainingDTO> trainingDTOList = trainingService.getTrainingDTOList(query, pagination.getOffset(), pageSize);
+
+        result.put("totalPage", pagination.getTotalPage());
         result.put("totalCount", totalCount);
         result.put("trainingDTOList", trainingDTOList);
         result.put("pageNum", pageNum);

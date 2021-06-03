@@ -30,8 +30,8 @@ public class AttendanceService {
     }
 
     @Transactional
-    public List<AttendanceDTO> getAttendanceDTOList(String query, int pageNum, int pageSize) {
-        List<Attendance> attendanceList = attendanceMapper.getAttendanceList(query, pageNum, pageSize);
+    public List<AttendanceDTO> getAttendanceDTOList(String query, int offset, int pageSize) {
+        List<Attendance> attendanceList = attendanceMapper.getAttendanceList(query, offset, pageSize);
 
         List<AttendanceDTO> attendanceDTOList = attendanceList.stream().map(attendance -> {
 

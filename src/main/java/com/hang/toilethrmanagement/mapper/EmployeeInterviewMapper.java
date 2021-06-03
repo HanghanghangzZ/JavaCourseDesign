@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface EmployeeInterviewMapper {
 
-    List<EmployeeInterview> getEmployeeInterviewList(String query, int pageNum, int pageSize);
+    List<EmployeeInterview> getEmployeeInterviewList(String query, int offset, int pageSize);
 
     int countEmployeeInterview(String query);
 

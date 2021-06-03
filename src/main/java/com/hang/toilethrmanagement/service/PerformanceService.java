@@ -29,9 +29,9 @@ public class PerformanceService {
     }
 
     @Transactional
-    public List<PerformanceDTO> getPerformanceDTOList(String query, int pageNum, int pageSize) {
+    public List<PerformanceDTO> getPerformanceDTOList(String query, int offset, int pageSize) {
 
-        List<Performance> performanceList = performanceMapper.getPerformanceList(query, pageNum, pageSize);
+        List<Performance> performanceList = performanceMapper.getPerformanceList(query, offset, pageSize);
 
         List<PerformanceDTO> performanceDTOList = performanceList.stream().map(performance -> {
             String staffName = staffMapper.getStaffNameById(performance.getStaffId());

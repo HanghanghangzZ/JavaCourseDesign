@@ -10,7 +10,7 @@
                 name REGEXP #{query}
             </if>
         </where>
-        LIMIT #{pageNum}, #{pageSize}
+        LIMIT #{offset}, #{pageSize}
     </select>
 
     <update id="updateQualificationById" parameterType="qualification">
@@ -48,7 +48,8 @@
     </select>
 
     <select id="getQualificationById" resultType="qualification">
-        SELECT * FROM qualification
+        SELECT *
+        FROM qualification
         WHERE id = #{qualificationId}
     </select>
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface PayrollMapper {
-    List<Payroll> getPayrollList(String query, Integer pageNum, Integer pageSize);
+    List<Payroll> getPayrollList(String query, Integer offset, Integer pageSize);
 
     int countPayroll();
 

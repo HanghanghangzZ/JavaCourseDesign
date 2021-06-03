@@ -10,7 +10,7 @@
                 name REGEXP #{query}
             </if>
         </where>
-        LIMIT #{pageNum}, #{pageSize}
+        LIMIT #{offset}, #{pageSize}
     </select>
 
     <update id="updateStaffById" parameterType="staff">

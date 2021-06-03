@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface QualificationMapper {
 
-    List<Qualification> getQualificationList(String query, Integer pageNum, Integer pageSize);
+    List<Qualification> getQualificationList(String query, Integer offset, Integer pageSize);
 
     int countQualification(String query);
 

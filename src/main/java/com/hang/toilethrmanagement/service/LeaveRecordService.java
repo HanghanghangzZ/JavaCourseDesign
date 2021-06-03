@@ -33,8 +33,8 @@ public class LeaveRecordService {
     }
 
     @Transactional
-    public List<LeaveRecordDTO> getLeaveRecordDTOList(String query, int pageNum, int pageSize) {
-        List<LeaveRecord> leaveRecordList = leaveRecordMapper.getLeaveRecordList(query, pageNum, pageSize);
+    public List<LeaveRecordDTO> getLeaveRecordDTOList(String query, int offset, int pageSize) {
+        List<LeaveRecord> leaveRecordList = leaveRecordMapper.getLeaveRecordList(query, offset, pageSize);
 
         List<LeaveRecordDTO> leaveRecordDTOList = leaveRecordList.stream().map(leaveRecord -> {
             String staffName = staffMapper.getStaffNameById(leaveRecord.getStaffId());

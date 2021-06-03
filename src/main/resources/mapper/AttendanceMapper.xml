@@ -12,7 +12,7 @@
                 WHERE name REGEXP #{query})
             </if>
         </where>
-        LIMIT #{pageNum}, #{pageSize}
+        LIMIT #{offset}, #{pageSize}
     </select>
 
     <update id="updateAttendanceById" parameterType="attendance">

@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    List<User> getUserList(String query, Integer pageNum, Integer pageSize);
+    List<User> getUserList(String query, Integer offset, Integer pageSize);
 
     int countUser(String query);
 

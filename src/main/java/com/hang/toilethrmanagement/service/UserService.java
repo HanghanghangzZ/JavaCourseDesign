@@ -39,9 +39,9 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserDTO> getUserDTOList(String query, Integer pageNum, Integer pageSize) {
+    public List<UserDTO> getUserDTOList(String query, Integer offset, Integer pageSize) {
 
-        List<User> userList = userMapper.getUserList(query, pageNum, pageSize);
+        List<User> userList = userMapper.getUserList(query, offset, pageSize);
 
         List<UserDTO> userDTOList = userList.stream().map(user -> {
             String staffNameById = staffMapper.getStaffNameById(user.getStaffId());
@@ -84,7 +84,11 @@ public class UserService {
     @Transactional
     public Token login(User user) {
         List<Integer> login = userMapper.login(user);
+        if (login.size() == 0) {
+            return null;
+        }
         user.setId(login.get(0));
+
         Token token = TokenUtil.tokenTest(user);
         if (tokenMapper.containUserId(user.getId()) > 0) {
             tokenMapper.updateToken(token);

@@ -1,8 +1,10 @@
 package com.hang.toilethrmanagement.controller;
 
+import com.hang.toilethrmanagement.bean.Pagination;
 import com.hang.toilethrmanagement.dto.PayrollDTO;
 import com.hang.toilethrmanagement.enums.CRUDMsgEnum;
 import com.hang.toilethrmanagement.service.PayrollService;
+import com.hang.toilethrmanagement.utils.PaginationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +37,14 @@ public class PayrollController {
                                             @PathVariable Integer pageNum, @PathVariable Integer pageSize) {
         HashMap<String, Object> result = new HashMap<>();
 
-        List<PayrollDTO> payrollDTOList = payrollService.getPayrollDTOList(query, pageNum, pageSize);
-
         int totalCount = payrollService.countPayroll(query);
 
+        Pagination pagination = PaginationUtil.getPagination(totalCount, pageSize, pageNum);
+        pageNum = pagination.getPageNum();
+
+        List<PayrollDTO> payrollDTOList = payrollService.getPayrollDTOList(query, pagination.getOffset(), pageSize);
+
+        result.put("totalPage", pagination.getTotalPage());
         result.put("totalCount", totalCount);
         result.put("payRollDTOList", payrollDTOList);
         result.put("pageNum", pageNum);

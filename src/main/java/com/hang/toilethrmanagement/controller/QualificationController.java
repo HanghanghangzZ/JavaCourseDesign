@@ -1,8 +1,10 @@
 package com.hang.toilethrmanagement.controller;
 
+import com.hang.toilethrmanagement.bean.Pagination;
 import com.hang.toilethrmanagement.enums.CRUDMsgEnum;
 import com.hang.toilethrmanagement.mapper.QualificationMapper;
 import com.hang.toilethrmanagement.model.Qualification;
+import com.hang.toilethrmanagement.utils.PaginationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +32,14 @@ public class QualificationController {
                                                   @PathVariable Integer pageNum, @PathVariable Integer pageSize) {
         HashMap<String, Object> result = new HashMap<>();
 
-        List<Qualification> qualificationList = qualificationMapper.getQualificationList(query, pageNum, pageSize);
-
         int totalCount = qualificationMapper.countQualification(query);
 
+        Pagination pagination = PaginationUtil.getPagination(totalCount, pageSize, pageNum);
+        pageNum = pagination.getPageNum();
+
+        List<Qualification> qualificationList = qualificationMapper.getQualificationList(query, pagination.getOffset(), pageSize);
+
+        result.put("totalPage", pagination.getTotalPage());
         result.put("totalCount", totalCount);
         result.put("qualificationList", qualificationList);
         result.put("pageNum", pageNum);

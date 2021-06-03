@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface LeaveRecordMapper {
 
-    List<LeaveRecord> getLeaveRecordList(String query, int pageNum, int pageSize);
+    List<LeaveRecord> getLeaveRecordList(String query, int offset, int pageSize);
 
     int countLeaveRecord(String query);
 

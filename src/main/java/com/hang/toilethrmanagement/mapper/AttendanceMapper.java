@@ -9,7 +9,7 @@ import java.util.List;
 public interface AttendanceMapper {
 
 
-    List<Attendance> getAttendanceList(String query, int pageNum, int pageSize);
+    List<Attendance> getAttendanceList(String query, int offset, int pageSize);
 
     int countAttendance(String query);
 

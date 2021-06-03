@@ -1,5 +1,6 @@
 package com.hang.toilethrmanagement.controller;
 
+import com.hang.toilethrmanagement.bean.Pagination;
 import com.hang.toilethrmanagement.dto.EmployeeInterviewPass;
 import com.hang.toilethrmanagement.enums.CRUDMsgEnum;
 import com.hang.toilethrmanagement.enums.InterviewStatusEnum;
@@ -8,6 +9,7 @@ import com.hang.toilethrmanagement.mapper.StaffMapper;
 import com.hang.toilethrmanagement.model.EmployeeInterview;
 import com.hang.toilethrmanagement.model.Staff;
 import com.hang.toilethrmanagement.service.EmployeeInterviewService;
+import com.hang.toilethrmanagement.utils.PaginationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +44,15 @@ public class EmployeeInterviewController {
                                                       @PathVariable int pageNum, @PathVariable int pageSize) {
         HashMap<String, Object> result = new HashMap<>();
 
-        List<EmployeeInterview> employeeInterviewList = employeeInterviewService.getEmployeeInterviewList(query, pageNum, pageSize);
-
         int totalCount = employeeInterviewService.countEmployeeInterview(query);
 
+        Pagination pagination = PaginationUtil.getPagination(totalCount, pageSize, pageNum);
+        pageNum = pagination.getPageNum();
+
+        List<EmployeeInterview> employeeInterviewList = employeeInterviewService.getEmployeeInterviewList(query, pagination.getOffset(), pageSize);
+
         result.put("totalCount", totalCount);
+        result.put("totalPage", pagination.getTotalPage());
         result.put("employeeInterviewList", employeeInterviewList);
         result.put("pageNum", pageNum);
         result.put("status", 200);

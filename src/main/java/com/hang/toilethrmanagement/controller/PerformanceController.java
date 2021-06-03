@@ -1,9 +1,11 @@
 package com.hang.toilethrmanagement.controller;
 
+import com.hang.toilethrmanagement.bean.Pagination;
 import com.hang.toilethrmanagement.dto.PerformanceDTO;
 import com.hang.toilethrmanagement.enums.CRUDMsgEnum;
 import com.hang.toilethrmanagement.model.Performance;
 import com.hang.toilethrmanagement.service.PerformanceService;
+import com.hang.toilethrmanagement.utils.PaginationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,14 @@ public class PerformanceController {
                                                 @PathVariable int pageNum, @PathVariable int pageSize) {
         HashMap<String, Object> result = new HashMap<>();
 
-        List<PerformanceDTO> performanceDTOList = performanceService.getPerformanceDTOList(query, pageNum, pageSize);
-
         int totalCount = performanceService.countPerformance(query);
 
+        Pagination pagination = PaginationUtil.getPagination(totalCount, pageSize, pageNum);
+        pageNum = pagination.getPageNum();
+
+        List<PerformanceDTO> performanceDTOList = performanceService.getPerformanceDTOList(query, pagination.getOffset(), pageSize);
+
+        result.put("totalPage", pagination.getTotalPage());
         result.put("totalCount", totalCount);
         result.put("performanceDTOList", performanceDTOList);
         result.put("pageNum", pageNum);

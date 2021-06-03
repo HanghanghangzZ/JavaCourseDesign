@@ -57,8 +57,8 @@ public class PayrollService {
     /* ----------------------------------------------------------------------------------------------------- */
 
     @Transactional
-    public List<PayrollDTO> getPayrollDTOList(String query, Integer pageNum, Integer pageSize) {
-        List<Payroll> payrollList = payrollMapper.getPayrollList(query, pageNum, pageSize);
+    public List<PayrollDTO> getPayrollDTOList(String query, Integer offset, Integer pageSize) {
+        List<Payroll> payrollList = payrollMapper.getPayrollList(query, offset, pageSize);
 
         List<PayrollDTO> payrollDTOList = payrollList.stream().map(payroll -> {
             String staffNameById = staffMapper.getStaffNameById(payroll.getStaffId());

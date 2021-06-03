@@ -30,8 +30,8 @@ public class TrainingService {
     }
 
     @Transactional
-    public List<TrainingDTO> getTrainingDTOList(String query, Integer pageNum, Integer pageSize) {
-        List<Training> trainingList = trainingMapper.getTrainingList(query, pageNum, pageSize);
+    public List<TrainingDTO> getTrainingDTOList(String query, Integer offset, Integer pageSize) {
+        List<Training> trainingList = trainingMapper.getTrainingList(query, offset, pageSize);
 
         List<TrainingDTO> trainingDTOList = trainingList.stream().map(training -> {
             String staffNameById = staffMapper.getStaffNameById(training.getStaffId());

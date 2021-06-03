@@ -51,9 +51,9 @@ public class EmployeeInterviewService {
     /* ---------------------------------------------------------------------------------------------------------------- */
     /* ---------------------------------------------------------------------------------------------------------------- */
 
-    public List<EmployeeInterview> getEmployeeInterviewList(String query, int pageNum, int pageSize) {
+    public List<EmployeeInterview> getEmployeeInterviewList(String query, int offset, int pageSize) {
 
-        return employeeInterviewMapper.getEmployeeInterviewList(query, pageNum, pageSize);
+        return employeeInterviewMapper.getEmployeeInterviewList(query, offset, pageSize);
     }
 
     public int countEmployeeInterview(String query) {

@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface PerformanceMapper {
 
-    List<Performance> getPerformanceList(String query, int pageNum, int pageSize);
+    List<Performance> getPerformanceList(String query, int offset, int pageSize);
 
     int countPerformance(String query);
 

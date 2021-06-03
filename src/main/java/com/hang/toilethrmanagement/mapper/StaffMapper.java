@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface StaffMapper {
 
-    List<Staff> getStaffList(String query, int pageNum, int pageSize);
+    List<Staff> getStaffList(String query, int offset, int pageSize);
 
     int countStaff(String query);
 

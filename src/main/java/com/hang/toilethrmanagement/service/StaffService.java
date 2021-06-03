@@ -39,8 +39,8 @@ public class StaffService {
     }
 
     @Transactional
-    public List<StaffDTO> getStaffList(String query, int pageNum, int pageSize) {
-        List<Staff> staffList = staffMapper.getStaffList(query, pageNum, pageSize);
+    public List<StaffDTO> getStaffList(String query, int offset, int pageSize) {
+        List<Staff> staffList = staffMapper.getStaffList(query, offset, pageSize);
 
         List<StaffDTO> staffDTOList = staffList.stream().map(staff -> {
             Position position = positionMapper.getPositionById(staff.getPositionId());

@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface PositionMapper {
 
-    List<Position> getPositionList(String query, Integer pageNum, Integer pageSize);
+    List<Position> getPositionList(String query, Integer offset, Integer pageSize);
 
     int countPosition(String query);
 

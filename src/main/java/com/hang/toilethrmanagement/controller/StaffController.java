@@ -1,9 +1,11 @@
 package com.hang.toilethrmanagement.controller;
 
+import com.hang.toilethrmanagement.bean.Pagination;
 import com.hang.toilethrmanagement.dto.StaffDTO;
 import com.hang.toilethrmanagement.model.Staff;
 import com.hang.toilethrmanagement.enums.CRUDMsgEnum;
 import com.hang.toilethrmanagement.service.StaffService;
+import com.hang.toilethrmanagement.utils.PaginationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,14 @@ public class StaffController {
                                           @PathVariable int pageNum, @PathVariable int pageSize) {
         HashMap<String, Object> result = new HashMap<>();
 
-        List<StaffDTO> staffDTOList = staffService.getStaffList(query, pageNum, pageSize);
-
         int totalCount = staffService.countStaff(query);
 
+        Pagination pagination = PaginationUtil.getPagination(totalCount, pageSize, pageNum);
+        pageNum = pagination.getPageNum();
+
+        List<StaffDTO> staffDTOList = staffService.getStaffList(query, pagination.getOffset(), pageSize);
+
+        result.put("totalPage", pagination.getTotalPage());
         result.put("totalCount", totalCount);
         result.put("staffDTOList", staffDTOList);
         result.put("pageNum", pageNum);

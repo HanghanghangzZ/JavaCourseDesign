@@ -1,9 +1,11 @@
 package com.hang.toilethrmanagement.controller;
 
+import com.hang.toilethrmanagement.bean.Pagination;
 import com.hang.toilethrmanagement.dto.LeaveRecordDTO;
 import com.hang.toilethrmanagement.enums.CRUDMsgEnum;
 import com.hang.toilethrmanagement.model.LeaveRecord;
 import com.hang.toilethrmanagement.service.LeaveRecordService;
+import com.hang.toilethrmanagement.utils.PaginationUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,14 @@ public class LeaveRecordController {
                                                 @PathVariable int pageNum, @PathVariable int pageSize) {
         HashMap<String, Object> result = new HashMap<>();
 
-        List<LeaveRecordDTO> leaveRecordDTOList = leaveRecordService.getLeaveRecordDTOList(query, pageNum, pageSize);
-
         int totalCount = leaveRecordService.countLeaveRecord(query);
 
+        Pagination pagination = PaginationUtil.getPagination(totalCount, pageSize, pageNum);
+        pageNum = pagination.getPageNum();
+
+        List<LeaveRecordDTO> leaveRecordDTOList = leaveRecordService.getLeaveRecordDTOList(query, pagination.getOffset(), pageSize);
+
+        result.put("totalPage", pagination.getTotalPage());
         result.put("totalCount", totalCount);
         result.put("leaveRecordDTOList", leaveRecordDTOList);
         result.put("pageNum", pageNum);
