@@ -10,6 +10,7 @@ public class UserDTO {
     private String password;
 
     private String staffName;
+    private Integer staffId;
 
     public UserDTO(User user, String staffName) {
         this.staffName = staffName;
@@ -17,5 +18,6 @@ public class UserDTO {
         this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
+        this.staffId = user.getStaffId();
     }
 }

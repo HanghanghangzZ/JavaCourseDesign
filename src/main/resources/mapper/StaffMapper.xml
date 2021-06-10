@@ -22,7 +22,7 @@
             <if test="idCard != null">
                 id_card = #{idCard},
             </if>
-            <if test="position_id != null">
+            <if test="positionId != null">
                 position_id = #{positionId},
             </if>
             <if test="age != null">

@@ -1,7 +1,16 @@
 # Java课设
+
 ## 说点什么
+
 这是我的第一个前后端分离的项目，大概的功能都在xmind中。以此记录，以资鼓励。(●'◡'●)
 接下来是要找暑假实习，加油(●'◡'●)
+
+## 前端地址以及相关技术栈
+https://github.com/Hedgehog-03/java-course-design
+前端(2人)
+- React + React Hooks + React Router + Ant Design + axios
+后端(1人)
+- Springboot + Mybatis + MySQL
 
 ## 数据库
 
@@ -32,9 +41,9 @@ create table qualification
 (
     id           int auto_increment
         primary key,
-    name         varchar(30)       not null,
-    extra_salary decimal default 0 not null,
-    count        int     default 0 not null
+    name         varchar(30)                 not null,
+    extra_salary decimal(12, 2) default 0.00 not null,
+    count        int            default 0    not null
 );
 
 create table employee_interview
@@ -52,12 +61,13 @@ create table performance
 (
     id       int auto_increment
         primary key,
-    staff_id int     not null,
-    date     bigint  not null,
-    bonus    decimal not null,
+    staff_id int            not null,
+    date     bigint         not null,
+    bonus    decimal(12, 2) not null,
     constraint performance_staff_id_fk
         foreign key (staff_id) references staff (id)
 );
+
 
 create table leave_record
 (
@@ -78,12 +88,11 @@ create table leave_record
 
 create table position
 (
-    id         int auto_increment,
-    name       varchar(30)   not null,
-    basic_wage decimal       not null,
-    count      int default 0 not null,
-    constraint position_pk
-        primary key (id)
+    id         int auto_increment
+        primary key,
+    name       varchar(30)    not null,
+    basic_wage decimal(12, 2) not null,
+    count      int default 0  not null
 );
 
 create table attendance
@@ -102,12 +111,12 @@ create table training
 (
     id              int auto_increment
         primary key,
-    training_method varchar(30) not null,
-    score           decimal     not null,
-    staff_id        int         not null,
-    start_time      bigint      not null,
-    end_time        bigint      not null,
-    last_time       varchar(30) not null,
+    training_method varchar(30)    not null,
+    score           decimal(10, 2) not null,
+    staff_id        int            not null,
+    start_time      bigint         not null,
+    end_time        bigint         not null,
+    last_time       varchar(30)    not null,
     constraint training_staff_id_fk
         foreign key (staff_id) references staff (id)
 );
@@ -116,11 +125,11 @@ create table payroll
 (
     id         int auto_increment
         primary key,
-    staff_id   int     not null,
-    basic_wage decimal not null,
-    bonus      decimal null,
-    date       bigint  not null comment '发工资的日期',
-    total      decimal not null,
+    staff_id   int            not null,
+    basic_wage decimal(12, 2) not null,
+    bonus      decimal(12, 2) null,
+    date       bigint         not null comment '发工资的日期',
+    total      decimal(12, 2) not null,
     constraint payroll_staff_id_fk
         foreign key (staff_id) references staff (id)
 )

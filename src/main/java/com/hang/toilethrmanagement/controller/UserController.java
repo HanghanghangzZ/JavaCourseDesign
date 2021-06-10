@@ -3,6 +3,7 @@ package com.hang.toilethrmanagement.controller;
 import com.hang.toilethrmanagement.bean.Pagination;
 import com.hang.toilethrmanagement.dto.UserDTO;
 import com.hang.toilethrmanagement.enums.CRUDMsgEnum;
+import com.hang.toilethrmanagement.mapper.StaffMapper;
 import com.hang.toilethrmanagement.model.User;
 import com.hang.toilethrmanagement.service.UserService;
 import com.hang.toilethrmanagement.utils.PaginationUtil;
@@ -25,6 +26,13 @@ public class UserController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    private StaffMapper staffMapper;
+
+    @Autowired
+    public void setStaffMapper(StaffMapper staffMapper) {
+        this.staffMapper = staffMapper;
     }
 
     @ApiOperation("获取用户数据")
