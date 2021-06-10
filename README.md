@@ -6,7 +6,8 @@
 接下来是要找暑假实习，加油(●'◡'●)
 
 ## 前端地址以及相关技术栈
-https://github.com/Hedgehog-03/java-course-design
+前端地址：https://github.com/Hedgehog-03/java-course-design
+
 前端(2人)
 - React + React Hooks + React Router + Ant Design + axios
 后端(1人)
